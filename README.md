@@ -330,3 +330,41 @@ Operators that can be used with client types are **Equals** and **NotEquals**. H
 	<ActionCriteria Name="$ClientType" Value="Other" Operator="NotEquals"/>
 <Criterias/>
 ```
+
+## Overview of triggers
+You may use [triggers.fsx](https://github.com/eway-crm/triggers/raw/master/Documentation/Triggers.fsx) to list all triggers in given directory. Usage is as follows:
+```shell
+dotnet fsi Documentation/triggers.fsx <triggers-directory>
+```
+
+Sample output:
+```shell
+/Triggers/General/GenerateExpensesFromWorkReports/GenerateExpensesFromWorkReports.xml
+GenerateExpensesFromWorkReports
+  Trigger type: ScheduledAtTime
+  Folder: <no-folder>
+  <documentation not found>
+  Stored Procedure: eWaySP_Leads_GenerateExpensesFromWorkReportsForAll
+  Job: Time: 06:05:00 Repeat: d IterationCount: 15 Frequency: 60
+  -------------
+  Trigger type: AfterSave
+  Folder: WorkReports
+  <documentation not found>
+  Stored Procedure: eWaySP_Leads_GenerateExpensesFromWorkReports
+  Criteria: ItemVersion NotEquals 1
+  -------------
+  Trigger type: AfterSave
+  Folder: Leads
+  <documentation not found>
+  Stored Procedure: eWaySP_Leads_GenerateExpensesFromWorkReports
+  NO CRITERIA
+  -------------
+  Trigger type: AfterSave
+  Folder: Relations
+  <documentation not found>
+  Stored Procedure: eWaySP_Leads_GenerateExpensesFromWorkReports
+  Criteria: ObjectTypeID2 EqualsFolderName Leads AND ObjectTypeID1 EqualsFolderName WorkReports AND RelationType Equals LEAD
+  -------------
+```
+
+The only dependency is [dotnet](https://dotnet.microsoft.com/) capable of running .fsx scripts.
